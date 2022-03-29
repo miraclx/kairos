@@ -69,7 +69,8 @@ for (let potential_phrase of permute(valids)) {
     console.log(` • Public Key: \x1b[33m${keyPair.publicKey}\x1b[0m`);
     break;
   }
-  console.log(`\x1b[0G\x1b[2K  \x1b[38;5;244m✗ ${phrase}\x1b[0m`);
+  let line = potential_phrase.map(word => word.padEnd(8, ' ')).join(' ');
+  console.log(`\x1b[0G\x1b[2K  \x1b[38;5;244m✗ ${line}\x1b[0m`);
   process.stdout.write(status);
 }
 console.log('\n\x1b[31mNo valid combinations found.\x1b[0m');
