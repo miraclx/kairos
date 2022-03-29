@@ -1,15 +1,20 @@
-let {formatWithOptions} = require("util");
+let {formatWithOptions} = require('util');
 
 function assert_eq(l, r) {
-  if (!Array.apply(null, {length: Math.max(l.length, r.length)}).every((_, i) => l[i] === r[i])) 
-   throw new Error("assertion failed");
+  if (!Array.apply(null, {length: Math.max(l.length, r.length)}).every((_, i) => l[i] === r[i]))
+    throw new Error('assertion failed');
 }
 
 function log(...msg) {
-  console.log(formatWithOptions({
-    colors: true,
-    depth: Infinity
-  }, ...msg));
+  console.log(
+    formatWithOptions(
+      {
+        colors: true,
+        depth: Infinity,
+      },
+      ...msg,
+    ),
+  );
 }
 
 function* permute(list) {

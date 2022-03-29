@@ -3,5 +3,9 @@
   "dependencies": {
     "near-seed-phrase": "^0.2.0",
     "pretty-ms": "^7.0.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "7.17.0",
+    "eslint-plugin-prettier": "4.0.0"
   }
 }
