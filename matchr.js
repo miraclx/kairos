@@ -32,6 +32,8 @@ let expectedPublicKeys = [
   'ed25519:BTyLuYU4GzZEEN6wDPv3m1p14wLxhwnNFcymqrzNZrib',
 ];
 
+console.log();
+
 let cacheFile = path.join(__dirname, '.cache.json');
 let state = fs.existsSync(cacheFile) ? JSON.parse(fs.readFileSync(cacheFile).toString()) : {};
 let [current, lastWrite, now, start, total] = [0, 0, 0, Date.now(), valids.reduce((a, t) => a * t.length, 1)];
@@ -68,7 +70,8 @@ for (let potential_phrase of permute(valids)) {
     break;
   }
   let line = potential_phrase.map(word => word.padEnd(8, ' ')).join(' ');
-  console.log(`\x1b[0G\x1b[2K  \x1b[38;5;244m✗ ${line}\x1b[0m`);
+  console.log(`${current - 1 ? '\x1b[F\x1b[0J' : ''}  \x1b[38;5;244m${line}\x1b[0m`);
+  // console.log(`\x1b[0G\x1b[2K  \x1b[38;5;244m✗ ${line}\x1b[0m`);
   process.stdout.write(status);
 }
 console.log('\n\x1b[31mNo valid combinations found.\x1b[0m');
