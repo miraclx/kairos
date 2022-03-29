@@ -1,0 +1,7 @@
+{
+  "name": "puzzlemaster-cracker",
+  "dependencies": {
+    "near-seed-phrase": "^0.2.0",
+    "pretty-ms": "^7.0.1"
+  }
+}
