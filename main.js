@@ -79,7 +79,7 @@ for (let potential_phrase of permute(valids)) {
       .map((_, i) => (i < (index / total) * barSize ? '\x1b[38;5;249m\u2588' : '\x1b[48;5;238m '))
       .join('');
     let progress = ((index / total) * 100).toFixed(2);
-    let status = `${spinner} [${bar}\x1b[0m] (${kps} k/s) (${progress}%) (${pms(
+    let status = `${spinner} [${bar}\x1b[0m] ${progress}% (${kps} k/s) (${pms(
       ((total - index) / (kps || 1)) * 1000,
     )}) [${index}/${total}]`;
     let line = potential_phrase.map(word => word.padEnd(8, ' ')).join(' ');
