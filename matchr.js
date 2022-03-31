@@ -39,7 +39,13 @@ function* permute(list) {
 }
 
 let cacheFile = path.join(__dirname, '.cache.json');
-let state = fs.existsSync(cacheFile) ? JSON.parse(fs.readFileSync(cacheFile).toString()) : {};
+let [state, updated] = [{}, 1];
+if (fs.existsSync(cacheFile)) {
+  let start = Date.now();
+  process.stdout.write('(i) Loading cache file...\x1b[0m');
+  state = JSON.parse(fs.readFileSync(cacheFile).toString());
+  console.log(`done (in ${pms(Date.now() - start)})`);
+}
 let [index, startTime, total] = [0, Date.now(), valids.reduce((a, t) => a * t.length, 1)];
 let [epoch5s, kps, lastTracked, epoch2ms, spinCursor] = [Date.now(), 0, 0, 0, 0];
 let found, now;
