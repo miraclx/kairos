@@ -27,8 +27,7 @@ node kairos.js
 Context: <https://twitter.com/SecretSkellies/status/1508859798116257793>
 
 Everyday for 12 days, a clue for a word in the seedphrase for the `puzzlemaster.near` account is released.
-From that one clue, you can have multiple guesses.
-And only a certain string of guesses is valid.
+From that one clue, you can have multiple guesses. Stringing together the right set of guesses gives you a valid seed phrase.
 
 ## How it works?
 
@@ -39,3 +38,7 @@ Using the content of the [`inputs.js`](inputs.js) file, kairos would;
 - for each permutation, check if the seedphrase is valid. See <https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#generating-the-mnemonic>
 - if the seedphrase is valid, convert it to a secret key.
 - check if the public key derived from the secret key matches one of the expected keys.
+
+## Resume?
+
+While kairos runs, it atomically dumps it's state to a cache file - `.cache.json` that includes information about all the permutations that have been tried to avoid having to retry them on subsequent runs.
