@@ -15,11 +15,11 @@ git clone https://github.com/miraclx/kairos.git
 cd kairos
 npm install
 
-# edit the inputs.js file to use your own keys and word guesses.
+# edit the inputs.js file to use custom keys and guesses.
 
 node kairos.js
 
-# now wait
+# now wait for the magic.
 ```
 
 ## Why?
