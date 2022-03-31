@@ -1,4 +1,4 @@
-{"version": 2, "width": 120, "height": 16, "timestamp": 1648727446, "env": {"SHELL": "/usr/bin/zsh", "TERM": "xterm-256color"}}
+{"version": 2, "width": 120, "height": 9, "timestamp": 1648727446, "env": {"SHELL": "/usr/bin/zsh", "TERM": "xterm-256color"}}
 [0.221973, "o", "\u001b]0;miraclx@d3vc0dr-pc:~/projects/git/near/snippets/puzzlemaster\u0007"]
 [0.222411, "o", "\u001b[?2004h\u001b[01;32m[miraclx@d3vc0dr-pc\u001b[01;37m puzzlemaster\u001b[01;32m]$\u001b[00m "]
 [0.962379, "o", "n"]
