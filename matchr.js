@@ -51,14 +51,18 @@ let [epoch5s, kps, lastTracked, epoch2ms, spinCursor] = [Date.now(), 0, 0, 0, 0]
 let found, now;
 for (let potential_phrase of permute(valids)) {
   let phrase = potential_phrase.join(' ');
-  let keyPair = (state[phrase] =
-    bip39.validateMnemonic(phrase, bip39English) &&
-    (state[phrase] ||
-      Object.fromEntries(Object.entries(nsp.parseSeedPhrase(phrase)).filter(([k]) => ['secretKey', 'publicKey'].includes(k)))));
-  if ((now = Date.now()) - epoch5s > 5000) {
+  let keyPair =
+    phrase in state
+      ? state[phrase]
+      : ((updated |= 1),
+        (state[phrase] =
+          bip39.validateMnemonic(phrase, bip39English) &&
+          Object.fromEntries(
+            Object.entries(nsp.parseSeedPhrase(phrase)).filter(([k]) => ['secretKey', 'publicKey'].includes(k)),
+          )));
+  if (updated && (now = Date.now()) - epoch5s > 5000) {
     // do this at every 5second interval
-    epoch5s = now;
-    lastTracked = index;
+    [updated, epoch5s, lastTracked] = [0, now, index];
     fs.writeFileSync(cacheFile, JSON.stringify(state));
   }
   index += 1;
