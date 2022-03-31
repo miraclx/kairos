@@ -2,7 +2,7 @@
   "name": "kairos",
   "version": "0.1.0",
   "description": "NEAR seed phrase cracker",
-  "main": "main.js",
+  "main": "kairos.js",
   "author": {
     "name": "Miraculous Owonubi",
     "email": "omiraculous@gmail.com",
