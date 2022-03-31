@@ -7,10 +7,14 @@ let nsp = require('near-seed-phrase');
 
 let {guesses, wordlistLanguage, expectedPublicKeys} = require('./inputs');
 
-if (!(wordlistLanguage in bip39.wordlists)) throw new Error('invalid wordlist language: ' + wordlistLanguage);
+if (!(wordlistLanguage in bip39.wordlists)) throw new Error(`invalid wordlist language: ${wordlistLanguage}`);
 let wordlist = bip39.wordlists[wordlistLanguage];
 
 let valids = guesses.map(entry => entry.filter(word => wordlist.includes(word)));
+if (!valids.length) throw new Error('no guesses');
+for (let [i, words] of valids.entries()) {
+  if (!words.length) throw new Error(`entry [${i + 1}] has no valid words`);
+}
 
 /// input = [
 ///   [1, 2],
