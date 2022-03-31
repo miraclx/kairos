@@ -42,3 +42,8 @@ Using the content of the [`inputs.js`](inputs.js) file, kairos would;
 ## Resume?
 
 While kairos runs, it atomically dumps it's state to a cache file - `.cache.json` that includes information about all the permutations that have been tried to avoid having to retry them on subsequent runs.
+
+It's worth noting that, due to the nature of this behaviour, the cache file grows infinitely.
+
+- To disable writing a cache file, use the `--no-cache` CLI flag.
+- To disable reading the cache file, use the `--fresh` CLI flag.

@@ -40,9 +40,11 @@ function* permute(list) {
   }
 }
 
+let shouldCache = !process.argv.includes('--no-cache');
+let fresh = process.argv.includes('--fresh');
 let cacheFile = path.join(__dirname, '.cache.json');
 let [state, updated] = [{}, 1];
-if (fs.existsSync(cacheFile)) {
+if (!fresh && fs.existsSync(cacheFile)) {
   let start = Date.now();
   process.stdout.write('(i) Loading cache file...\x1b[0m');
   state = JSON.parse(fs.readFileSync(cacheFile).toString());
@@ -65,7 +67,7 @@ for (let potential_phrase of permute(valids)) {
   if (updated && (now = Date.now()) - epoch5s > 5000) {
     // do this at every 5second interval
     [updated, epoch5s, lastTracked] = [0, now, index];
-    fs.writeFileSync(cacheFile, JSON.stringify(state));
+    if (shouldCache) fs.writeFileSync(cacheFile, JSON.stringify(state));
   }
   index += 1;
   found = keyPair && expectedPublicKeys.includes(keyPair.publicKey);
