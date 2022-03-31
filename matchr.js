@@ -5,25 +5,9 @@ let bip39 = require('bip39');
 let pms = require('pretty-ms');
 let nsp = require('near-seed-phrase');
 
-let {guesses: days, expectedPublicKeys} = require('./inputs');
+let {guesses, expectedPublicKeys} = require('./inputs');
 
-console.log('(showing valid words only)');
-
-let valids = [];
-
-let bip39English = bip39.wordlists.english;
-
-for (let [day, guesses] of Object.entries(days)) {
-  console.log(`\n[Day ${+day + 1}]`);
-  for (let [guess, matches, nValid, slot] of guesses.map(Array))
-    if ((nValid = (matches = bip39English.filter(word => word == guess)).length)) {
-      console.log(`  \u2022 \x1b[36m${guess}\x1b[0m`);
-      ((slot = valids[day]) || (valids.push((slot = [])), slot)).push(...matches);
-      if (nValid > 1 || !matches.includes(guess)) console.log(matches.map(word => `    - \x1b[32m${word}\x1b[0m`).join('\n'));
-    }
-}
-
-console.log();
+let valids = guesses.map(entry => entry.filter(word => bip39.wordlists.english.includes(word)));
 
 function* permute(list) {
   if (!list.length) {
@@ -56,7 +40,7 @@ for (let potential_phrase of permute(valids)) {
       ? state[phrase]
       : ((updated |= 1),
         (state[phrase] =
-          bip39.validateMnemonic(phrase, bip39English) &&
+          bip39.validateMnemonic(phrase, bip39.wordlists.english) &&
           Object.fromEntries(
             Object.entries(nsp.parseSeedPhrase(phrase)).filter(([k]) => ['secretKey', 'publicKey'].includes(k)),
           )));
