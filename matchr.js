@@ -5,7 +5,6 @@ let bip39 = require('bip39');
 let pms = require('pretty-ms');
 let nsp = require('near-seed-phrase');
 
-let {permute} = require('./utils');
 let {guesses: days, expectedPublicKeys} = require('./inputs');
 
 console.log('(showing valid words only)');
@@ -25,6 +24,19 @@ for (let [day, guesses] of Object.entries(days)) {
 }
 
 console.log();
+
+function* permute(list) {
+  if (!list.length) {
+    yield [];
+    return;
+  }
+  let [head, ...tail] = list;
+  for (let v of head) {
+    for (let rest of permute(tail)) {
+      yield [v, ...rest];
+    }
+  }
+}
 
 let cacheFile = path.join(__dirname, '.cache.json');
 let state = fs.existsSync(cacheFile) ? JSON.parse(fs.readFileSync(cacheFile).toString()) : {};
