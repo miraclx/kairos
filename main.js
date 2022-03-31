@@ -5,9 +5,12 @@ let bip39 = require('bip39');
 let pms = require('pretty-ms');
 let nsp = require('near-seed-phrase');
 
-let {guesses, expectedPublicKeys} = require('./inputs');
+let {guesses, wordlistLanguage, expectedPublicKeys} = require('./inputs');
 
-let valids = guesses.map(entry => entry.filter(word => bip39.wordlists.english.includes(word)));
+if (!(wordlistLanguage in bip39.wordlists)) throw new Error('invalid wordlist language: ' + wordlistLanguage);
+let wordlist = bip39.wordlists[wordlistLanguage];
+
+let valids = guesses.map(entry => entry.filter(word => wordlist.includes(word)));
 
 /// input = [
 ///   [1, 2],
@@ -51,7 +54,7 @@ for (let potential_phrase of permute(valids)) {
       ? state[phrase]
       : ((updated |= 1),
         (state[phrase] =
-          bip39.validateMnemonic(phrase, bip39.wordlists.english) &&
+          bip39.validateMnemonic(phrase, wordlist) &&
           Object.fromEntries(
             Object.entries(nsp.parseSeedPhrase(phrase)).filter(([k]) => ['secretKey', 'publicKey'].includes(k)),
           )));

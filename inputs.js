@@ -1,3 +1,5 @@
+let wordlistLanguage = 'english';
+
 let expectedPublicKeys = [
   // these are the two FullAccess keys on the puzzlemaster.near
   // account as at block hash AUuoUf2hZBWoxGF7bDuPzuyM88NHSEEr63sKgUQoHMLz
@@ -198,5 +200,6 @@ let guesses = [
 
 module.exports = {
   guesses,
+  wordlistLanguage,
   expectedPublicKeys,
 };
