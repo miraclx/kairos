@@ -1,7 +1,7 @@
 {
   "name": "kairos",
   "version": "0.1.0",
-  "description": "NEAR seed phrase cracker",
+  "description": "Bruteforce a NEAR seed phrase from a couple of guesses",
   "main": "kairos.js",
   "author": {
     "name": "Miraculous Owonubi",
