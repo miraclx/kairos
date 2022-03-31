@@ -51,7 +51,7 @@ if (!fresh && fs.existsSync(cacheFile)) {
   console.log(`done (in ${pms(Date.now() - start)})`);
 }
 let [index, startTime, total] = [0, Date.now(), valids.reduce((a, t) => a * t.length, 1)];
-let [epoch5s, kps, lastTracked, epoch2ms, spinCursor] = [Date.now(), 0, 0, 0, 0];
+let [epoch5s, kps, lastTracked, epoch1ms, spinCursor] = [Date.now(), 0, 0, 0, 0];
 let found, now;
 for (let potential_phrase of permute(valids)) {
   let phrase = potential_phrase.join(' ');
@@ -71,9 +71,9 @@ for (let potential_phrase of permute(valids)) {
   }
   index += 1;
   found = keyPair && expectedPublicKeys.includes(keyPair.publicKey);
-  if (found || (now = Date.now()) - epoch2ms > 200) {
-    // do this at every 200ms interval
-    epoch2ms = now;
+  if (found || (now = Date.now()) - epoch1ms > 100) {
+    // do this at every 100ms interval
+    epoch1ms = now;
     let barSize = process.stdout.columns / 4;
     if (Date.now() - epoch5s >= 500) kps = Math.round((index - lastTracked) / ((Date.now() - epoch5s) / 1000));
     let spinner = ['/', '-', '\\', '-'][(spinCursor = (spinCursor + 1) % 4)];
