@@ -1,5 +1,18 @@
 {
-  "name": "puzzlemaster-cracker",
+  "name": "kairos",
+  "version": "0.1.0",
+  "description": "NEAR seed phrase cracker",
+  "main": "main.js",
+  "author": {
+    "name": "Miraculous Owonubi",
+    "email": "omiraculous@gmail.com",
+    "url": "https://github.com/miraclx"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:miraclx/freyr-js.git"
+  },
   "dependencies": {
     "bip39": "^3.0.4",
     "near-seed-phrase": "^0.2.0",
