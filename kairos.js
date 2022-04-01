@@ -50,8 +50,9 @@ if (!fresh && fs.existsSync(cacheFile)) {
   state = JSON.parse(fs.readFileSync(cacheFile).toString());
   console.log(`done (in ${pms(Date.now() - start)})`);
 }
-let [index, startTime, total] = [0, Date.now(), valids.reduce((a, t) => a * t.length, 1)];
-let [epoch5s, kps, lastTracked, epoch1ms, spinCursor] = [Date.now(), 0, 0, 0, 0];
+let [startTime, index, total] = [Date.now(), 0, valids.reduce((a, t) => a * t.length, 1)];
+let [lastStateCache, lastProgressPrint, spinCursor] = [Date.now(), 0, 0];
+let [lastKpsCursorSet, kps, lastKpsIndexCursor] = [Date.now(), 0, 0];
 let found, now;
 for (let potential_phrase of permute(valids)) {
   let phrase = potential_phrase.join(' ');
@@ -64,18 +65,18 @@ for (let potential_phrase of permute(valids)) {
           Object.fromEntries(
             Object.entries(nsp.parseSeedPhrase(phrase)).filter(([k]) => ['secretKey', 'publicKey'].includes(k)),
           )));
-  if (updated && (now = Date.now()) - epoch5s > 5000) {
-    // do this at every 5second interval
-    [updated, epoch5s, lastTracked] = [0, now, index];
-    if (shouldCache) fs.writeFileSync(cacheFile, JSON.stringify(state));
+  if ((now = Date.now()) - lastKpsCursorSet > 5000) [lastKpsIndexCursor, lastKpsCursorSet] = [index, now];
+  if (updated && shouldCache && Date.now() - lastStateCache > 5000) {
+    fs.writeFileSync(cacheFile, JSON.stringify(state));
+    [lastStateCache, updated] = [Date.now(), 0];
   }
   index += 1;
   found = keyPair && expectedPublicKeys.includes(keyPair.publicKey);
-  if (found || (now = Date.now()) - epoch1ms > 100) {
-    // do this at every 100ms interval
-    epoch1ms = now;
+  if (found || (now = Date.now()) - lastProgressPrint > 100) {
+    lastProgressPrint = now;
     let barSize = process.stdout.columns / 4;
-    if (Date.now() - epoch5s >= 500) kps = Math.round((index - lastTracked) / ((Date.now() - epoch5s) / 1000));
+    if (Date.now() - lastKpsCursorSet >= 500)
+      kps = Math.round((index - lastKpsIndexCursor) / ((Date.now() - lastKpsCursorSet) / 1000));
     let spinner = ['/', '-', '\\', '-'][(spinCursor = (spinCursor + 1) % 4)];
     let bar = Array.apply(null, {length: barSize})
       .map((_, i) => (i < (index / total) * barSize ? '\x1b[38;5;249m\u2588' : '\x1b[48;5;238m '))
