@@ -99,3 +99,7 @@ for (let potential_phrase of permute(valids)) {
   }
 }
 if (!found) console.log('\n\x1b[31mNo valid combinations found.\x1b[0m');
+if (updated && shouldCache) {
+  console.log('(i) Saving final cache state...');
+  fs.writeFileSync(cacheFile, JSON.stringify(state));
+}
