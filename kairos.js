@@ -43,7 +43,7 @@ function* permute(list) {
 let shouldCache = !process.argv.includes('--no-cache');
 let fresh = process.argv.includes('--fresh');
 let cacheFile = path.join(__dirname, '.cache.json');
-let [state, updated] = [{}, 1];
+let [state, updated] = [{}, 0];
 if (!fresh && fs.existsSync(cacheFile)) {
   let start = Date.now();
   process.stdout.write('(i) Loading cache file...\x1b[0m');
