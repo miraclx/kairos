@@ -6,7 +6,7 @@ Bruteforce a NEAR seed phrase from a couple of guesses.
 
 ## Demo
 
-[![ASCII Demo](https://github.com/miraclx/kairos/raw/master/media/demo.gif)](https://asciinema.org/a/482910?autoplay=1 "Click to view ASCII")
+[![ASCII Demo](https://github.com/miraclx/kairos/raw/master/media/demo.gif)](https://asciinema.org/a/483445?autoplay=1 "Click to view ASCII")
 
 ## How to run?
 
